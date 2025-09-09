@@ -120,8 +120,8 @@ Classe base para filmes e jogos.
 
 ## 📞 Contato
 
-- **GitHub:** [seu-usuario](https://github.com/seu-usuario)  
-- **Email:** contato@locadora.com  
+- **GitHub:** [Meu github 🤩](https://github.com/MatheusCatarucci/Locadora)  
+- **Email:** matheus.catarucci7@gmail.com  
 
 ---
 
