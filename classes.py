@@ -73,7 +73,6 @@ class Cliente():
             self.__itensLocados.remove(item)
             print("Item removido com sucesso!")
 
-    # Métodos
     def listarItens(self):
         for item in self.__itensLocados:
             print(item)
