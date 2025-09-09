@@ -120,7 +120,7 @@ Classe base para filmes e jogos.
 
 ## 📞 Contato
 
-- **GitHub:** [Meu github 🤩](https://github.com/MatheusCatarucci/Locadora)  
+- **GitHub:** [Meu github 🤩](https://github.com/MatheusCatarucci)  
 - **Email:** matheus.catarucci7@gmail.com  
 
 ---
