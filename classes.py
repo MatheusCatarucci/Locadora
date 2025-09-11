@@ -1,13 +1,27 @@
+import os
+
 class Locadora:
     # Método construtor
     def __init__(self):
-        self.__clientes = []
-        self.__itens = []
+        self.__clientes = {}
+        self.__itens = {}
 
     # Métodos
-    def cadastrarCliente(self, cliente):
-        self.__clientes.append(cliente)
-        print("Cliente Cadastrado com sucesso!")
+    def cadastrarCliente(self, nome, cpf, cliente):
+        if cpf in self.__clientes:
+            print("Usuário já cadastrado!")
+            os.system("pause")
+        else:
+            cpf = {
+                "nome" : nome,
+                "cpf" : cpf,
+                "itens_locados": []
+            }
+        
+        self.__clientes[cpf] = cliente
+        print("Usuário cadastrado dcom sucesso!")
+        os.system("pause")
+
     
     def cadastrarItem(self, item):
         self.__itens.append(item)
@@ -16,16 +30,24 @@ class Locadora:
     def listarClientes(self):
         if not self.__clientes:
             print("Nenhum cliente cadastrado")
+            os.system("pause")
         else:            
             for cliente in self.__clientes:
                 print(f"Cliente: {cliente}")
+            os.system("pause")
 
     def listarItens(self):
+        if Item.getDisponivel():
+            disponibilidade = "Disponível"
+        else:
+            disponibilidade = "Indisponível"
         if not self.__itens:
             print("Nenhum item cadastrado")
+            os.system("pause")
         else:
             for item in self.__itens:
-                print(f"Item: {item}")
+                print(f"ID: {item.getId()}, Título: {item.getTitulo()}, Disponível: {disponibilidade}")
+            os.system("pause")
 
     def setClientes(self, clientes):
         self.__clientes = clientes
@@ -37,7 +59,7 @@ class Locadora:
         return self.__itens
     
     def getClientes(self):
-        return self._clientes
+        return self.__clientes
 
 #================================================
 class Cliente():
@@ -79,8 +101,10 @@ class Cliente():
 
 #================================================
 class Item():
+    _id_counter = 1
+
     def __init__(self, titulo, disponivel):
-        self.__id = 1
+        self.__id = Item._id_counter
         self.__titulo = titulo
         self.__disponivel = disponivel
 
@@ -93,6 +117,7 @@ class Item():
     
     def getDisponivel(self):
         return self.__disponivel
+
     
     def setId(self, id):
         self.__id = id
@@ -129,8 +154,8 @@ class Filme(Item):
     def setGenero(self, genero):
         self.__genero = genero
 
-    def setDuracao(self, genero):
-        self.__genero = genero
+    def setDuracao(self, duracao):
+        self.__duracao = duracao
 
 #================================================
 class Jogo(Item):
@@ -141,10 +166,10 @@ class Jogo(Item):
 
     # Getters e Setters
     def getTitulo(self):
-        return self.__titulo
+        return super().getTitulo()
     
     def getDisponivel(self):
-        return self.__disponivel
+        return super().getDisponivel()
     
     def getPlataforma(self):
         return self.__plataforma
@@ -152,11 +177,11 @@ class Jogo(Item):
     def getFaixaEtaria(self):
         return self.__faixaEtaria
     
-    def setTitulo(self, titulo):
-        self.__titulo = titulo
+    def setTitulo(self):
+        super().setTitulo()
 
-    def setDisponivel(self, disponivel):
-        self.__disponivel = disponivel
+    def setDisponivel(self):
+        super().setDisponivel()
 
     def setPlataforma(self, plataforma):
         self.__plataforma = plataforma

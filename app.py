@@ -1,6 +1,7 @@
 from classes import *
 import os
 
+locadora = Locadora()
 
 # ====================
 # Funções auxiliares
@@ -14,18 +15,11 @@ def pause():
 
 
 def listagem_locadora():
-    locadora = Locadora()
     limpar_tela()
-    print("===== ITENS DA LOCADORA =====")
-    itens = locadora.getItens()
-    for item in itens:
-        print(item)
-    print("\nItens listados")
-    pause()
+    locadora.listarItens()
 
 
 def registrar_itens():
-    locadora = Locadora()
     while True:
         limpar_tela()
         print("===== REGISTRO DE ITENS =====")
@@ -55,6 +49,9 @@ def registrar_itens():
                 disponivel_opcao = input(
                     "O jogo está disponível para troca? (s/n)\n--> "
                 )
+                limpar_tela()
+                print("Jogo cadastrado com sucesso")
+                pause()
                 if disponivel_opcao == "s":
                     disponivel = True
                 elif disponivel_opcao == "n":
@@ -105,8 +102,8 @@ def cadastro_clientes():
             continue  # volta pro início do loop
         cpf = int(cpf_input)
         cliente = Cliente(nome, cpf)
-        cliente.setNome(nome)
-        cliente.setCpf(cpf)
+        cliente.setNome()
+        cliente.setCpf()
         print("Cliente cadastrado com sucesso")
         pause()
 
