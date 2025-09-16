@@ -1,57 +1,61 @@
 import os
 
+def limpar_tela():
+    os.system("cls" if os.name == "nt" else "clear")
+
+def pause():
+    input("\nPressione ENTER para continuar...")
+
 class Locadora:
-    # Método construtor
     def __init__(self):
         self.__clientes = {}
         self.__itens = {}
 
-    # Métodos
     def cadastrarCliente(self, cliente):
         cpf = cliente.getCpf()
         if cpf in self.__clientes:
-            os.system("cls")
+            limpar_tela()
             print("Usuário já cadastrado")
+            pause()
         else:
             self.__clientes[cpf] = cliente
+            limpar_tela()
+            print("Cliente cadastrado com sucesso!")
+            pause()
     
     def cadastrarItem(self, item):
         id = item.getId()
         if id in self.__itens:
-            os.system("cls")
+            limpar_tela()
             print("ID já cadastrado")
-            os.system("pause")
+            pause()
         else:
-            os.system("cls")
             self.__itens[id] = item
-            print("Item cadastrado com suceso")
+            limpar_tela()
+            print("Item cadastrado com sucesso")
+            pause()
 
-    def listarClientes(self, cliente):
+    def listarClientes(self):
+        limpar_tela()
         if not self.__clientes:
-            os.system("cls")
             print("Nenhum cliente cadastrado")
-            os.system("pause")
         else:
-            os.system("cls")            
             for cpf, cliente in self.__clientes.items():
                 print(f"Nome: {cliente.getNome()}")
                 print(f"CPF: {cliente.getCpf()}")
-                print("")
-                print(20 * "=")
-                print("")
-                os.system("pause")
+                print("=" * 20)
+        pause()
 
     def listarItens(self):
-            if not self.__itens:
-                os.system("cls")
-                print("Nenhum item cadastrado")
-            else:
-                os.system("cls")
-                disponibilidade = "DISPONÍVEL" if item.getDisponivel() else "INDISPONÍVEL" 
-                for id, item in self.__itens.items():
-                    print(f"ID: {item.getId()}")
-                    print(f"Categoria: {item.getId()}")
-                    print(f"Disponibilidade: {disponibilidade}")
+        limpar_tela()
+        if not self.__itens:
+            print("Nenhum item cadastrado")
+        else:
+            for id, item in self.__itens.items():
+                disponibilidade = "DISPONÍVEL" if item.getDisponivel() else "INDISPONÍVEL"
+                print(f"ID: {item.getId()}")
+                print(f"Título: {item.getTitulo()}")
+                print(f"Disponibilidade: {disponibilidade}")
 
                 if isinstance(item, Jogo):
                     print(f"Plataforma: {item.getPlataforma()}")
@@ -59,12 +63,10 @@ class Locadora:
 
                 if isinstance(item, Filme):
                     print(f"Gênero: {item.getGenero()}")
-                    print(f"Duração: {item.getDuracao()}")
-            
-                print("")
-                print(20 * "=")
-                print("")
-            os.system("cls")
+                    print(f"Duração: {item.getDuracao()} min")
+
+                print("=" * 20)
+        pause()
 
     def getItens(self):
         return self.__itens
@@ -72,8 +74,9 @@ class Locadora:
     def getClientes(self):
         return self.__clientes
 
-#================================================
-class Cliente():
+
+# =================================================
+class Cliente:
     def __init__(self, nome, cpf):
         self.__nome = nome
         self.__cpf = cpf
@@ -88,49 +91,46 @@ class Cliente():
     def getItensLocados(self):
         return self.__itensLocados
 
-    # Métodos
     def locar(self, item):
-        os.system("cls")
+        limpar_tela()
         if item.getDisponivel():
             self.__itensLocados.append(item)
             item.alugar()
-            os.system("cls")
             print("Item alugado com sucesso")
-            os.system("pause")
         else:
-            os.system("cls")
-            print("O item não esta disponível")
-            os.system("pause")
+            print("O item não está disponível")
+        pause()
 
     def devolver(self, item):
+        limpar_tela()
         if item in self.__itensLocados:
             self.__itensLocados.remove(item)
-            item.devoler()
-            print("Item removido com sucesso!")
+            item.devolver()
+            print("Item devolvido com sucesso!")
         else:
             print("Este item não foi locado pelo cliente")
+        pause()
 
     def listarItens(self):
+        limpar_tela()
         if not self.__itensLocados:
-            os.system("cls")
-            print("Não há itens cadastrados")
-            os.system("pause")
+            print("Não há itens locados")
         else:
             for item in self.__itensLocados:
                 print(f"Item: {item.getTitulo()}")
-            
+        pause()
 
-#================================================
-class Item():
+
+# =================================================
+class Item:
     _id_counter = 1
 
-    def __init__(self, titulo, disponivel):
+    def __init__(self, titulo, disponivel=True):
         self.__id = Item._id_counter
-        self.__id_counter += 1
+        Item._id_counter += 1
         self.__titulo = titulo
         self.__disponivel = disponivel
 
-    # Getters e Setters
     def getId(self):
         return self.__id
     
@@ -140,29 +140,19 @@ class Item():
     def getDisponivel(self):
         return self.__disponivel
 
-    
-    def setId(self, id):
-        self.__id = id
-
-    def setTitulo(self, titulo):
-        self.__titulo = titulo
-
     def setDisponivel(self, disponivel):
         self.__disponivel = disponivel
 
-
-    # Métodos
     def alugar(self):
         self.setDisponivel(False)
-        return "Livro alugado com sucesso!"
     
     def devolver(self):
         self.setDisponivel(True)
-        return "Livro devolvido com sucesso!"
 
-#================================================
+
+# =================================================
 class Filme(Item):
-    def __init__(self, titulo, disponivel, genero, duracao):
+    def __init__(self, titulo, genero, duracao, disponivel=True):
         super().__init__(titulo, disponivel)
         self.__genero = genero
         self.__duracao = duracao
@@ -172,16 +162,11 @@ class Filme(Item):
     
     def getDuracao(self):
         return self.__duracao
-    
-    def setGenero(self, genero):
-        self.__genero = genero
 
-    def setDuracao(self, duracao):
-        self.__duracao = duracao
 
-#================================================
+# =================================================
 class Jogo(Item):
-    def __init__(self, titulo, disponivel, plataforma, faixaEtaria):
+    def __init__(self, titulo, plataforma, faixaEtaria, disponivel=True):
         super().__init__(titulo, disponivel)
         self.__plataforma = plataforma
         self.__faixaEtaria = faixaEtaria
@@ -191,10 +176,3 @@ class Jogo(Item):
     
     def getFaixaEtaria(self):
         return self.__faixaEtaria
-
-    def setPlataforma(self, plataforma):
-        self.__plataforma = plataforma
-
-    def setFaixaEtaria(self, faixaEtaria):
-        self.__faixaEtaria = faixaEtaria
-        
