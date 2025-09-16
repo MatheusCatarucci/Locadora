@@ -1,7 +1,7 @@
 import os
 
 def limpar_tela():
-    os.system("cls" if os.name == "nt" else "clear")
+    os.system("cls")
 
 def pause():
     input("\nPressione ENTER para continuar...")
